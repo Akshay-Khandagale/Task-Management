@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Task Management</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Task Management</h1>
+
+        <form id="task-form">
+
+            <div class="form-group">
+                <label for="title">Task Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter task title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Enter task description" rows="4"
+                    required></textarea>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+
+                    <select id="priority" name="priority">
+                        <option value="">Select Priority</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+
+                    <select id="status" name="status">
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+
+                    <input type="date" id="start_date" name="start_date">
+                </div>
+
+                <div class="form-group">
+                    <label for="due_date">Due Date</label>
+
+                    <input type="date" id="due_date" name="due_date">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="assigned_to">Assigned To</label>
+
+                <input type="text" id="assigned_to" name="assigned_to" placeholder="Enter employee name">
+            </div>
+
+            <!-- <button type="submit"></button> -->
+            <input type="submit" value="Create Task">
+
+        </form>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        console.log('1');
+        // By Default Cursor show on Name Input Field
+        window.onload = function () {
+            document.getElementById("title").focus();
+        };
+
+
+
+        document.getElementById("task-form").addEventListener("submit", async function (e) {
+            console.log('2');
+            e.preventDefault();
+
+            const form = document.querySelector("#task-form");
+
+            const formData = new URLSearchParams(new FormData(form));
+
+            console.log('3');
+            try {
+                console.log('4');
+                // Start - Data send krtoy
+                const response = await fetch("/api/assignTask/save_task", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: formData
+                });
+
+                // End - Data send krtoy
+
+                // Start - Response Ghetoy
+                const result = await response.json();
+                // End - Response Ghetoy
+
+                document.getElementById("output").innerHTML = result.message;
+                // Clear all form fields
+                document.getElementById("task-form").reset();
+
+            } catch (error) {
+                console.log('5');
+                console.log(error);
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
