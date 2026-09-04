@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Add User</h1>
+    <form id="saveData">
+        <table>
+            <tr>
+                <td><label for="name">Name</label></td>
+                <td><input type="text" id="name" name="name" placeholder="Enter Name"></td>
+            </tr>
+            <tr>
+                <td><label for="lname">Name</label></td>
+                <td><input type="text" id="lname" name="lname" placeholder="Enter Last Name"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        document.getElementById('saveData').addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const form = document.getElementById("saveData");
+            const formData = new URLSearchParams(new FormData(form));
+
+            const response = await fetch('/api/User/saveUser', {
+                method: "POST",
+                headers: {
+                    "content": "application/x-www-form-urlencoded"
+                },
+                body: formData
+            })
+        });
+    </script>
+</body>
+
+</html>
