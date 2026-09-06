@@ -7,6 +7,8 @@ router.get('/showUserForm', (req, res) => {
     res.render('addUser');
 });
 
-router.get('/saveUser', addUserCon.saveUserData);
+router.post('/saveUser', addUserCon.saveUserData);
+
+router.get("/showUserData", addUserCon.displayUsers);
 
 export default router

@@ -17,7 +17,7 @@
                 <td><input type="text" id="name" name="name" placeholder="Enter Name"></td>
             </tr>
             <tr>
-                <td><label for="lname">Name</label></td>
+                <td><label for="lname">Last Name</label></td>
                 <td><input type="text" id="lname" name="lname" placeholder="Enter Last Name"></td>
             </tr>
             <tr>
@@ -33,6 +33,7 @@
             const form = document.getElementById("saveData");
             const formData = new URLSearchParams(new FormData(form));
 
+
             const response = await fetch('/api/User/saveUser', {
                 method: "POST",
                 headers: {
@@ -40,6 +41,7 @@
                 },
                 body: formData
             })
+            document.getElementById('saveData').reset();
         });
     </script>
 </body>
