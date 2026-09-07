@@ -30,7 +30,22 @@ const displayUsers = async (req, res) => {
     }
 }
 
+const deleteUsers = async (req, res) => {
+    try {
+        const id = req.body.id;
+        const data = await userModel.deleteUserData(id);
+        res.status(200).json({
+            message: "Delete successfully"
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: "failed to delete data"
+        });
+    }
+};
+
 export default {
     saveUserData,
-    displayUsers
+    displayUsers,
+    deleteUsers
 }

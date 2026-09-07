@@ -10,7 +10,13 @@ const showUserData = async () => {
     return showData;
 }
 
+const deleteUserData = async (id) => {
+    const deleteResult = await db.execute("delete from new_users where id = ?", [id]);
+    return deleteResult;
+}
+
 export default {
     userSaveData,
-    showUserData
+    showUserData,
+    deleteUserData
 }
