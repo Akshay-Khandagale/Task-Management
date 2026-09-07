@@ -10,37 +10,77 @@
 
 <body>
     <div style="text-align: center;">
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% users.forEach(user=> { %>
-
-                    <tr id="user-<%= user.id %>">
-                        <td>
-                            <%= user.id %>
-                        </td>
-                        <td>
-                            <%= user.name %>
-                        </td>
-                        <td>
-                            <%= user.lastname %>
-                        </td>
-                        <td>
-                            <button id="edit">Edit</button>
-                            <button onclick="Delete(<%= user.id %>)">Delete</button>
-                        </td>
+        <h1>USER TABLE</h1>
+        <div style="display: inline-flex;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Action</th>
                     </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user=> { %>
 
-                    <% }) %>
-            </tbody>
-        </table>
+                        <tr id="user-<%= user.id %>">
+                            <td>
+                                <%= user.id %>
+                            </td>
+                            <td>
+                                <%= user.name %>
+                            </td>
+                            <td>
+                                <%= user.lastname %>
+                            </td>
+                            <td>
+                                <button id="edit">Edit</button>
+                                <button onclick="Delete(<%= user.id %>)">Delete</button>
+                            </td>
+                        </tr>
+
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+
+        <div style="margin-top: 20px;">
+
+            <% if (currentPage> 1) { %>
+
+                <a href="/api/User/showUserData?page=<%= currentPage - 1 %>">
+                    <button>Previous</button>
+                </a>
+
+                <% } %>
+
+
+                    <% for (let i=1; i <=totalPages; i++) { %>
+
+                        <a href="/api/User/showUserData?page=<%= i %>">
+
+                            <button style="<%= currentPage == i ? 'background:black;color:white;' : '' %>">
+
+                                <%= i %>
+
+                            </button>
+
+                        </a>
+
+                        <% } %>
+
+
+                            <% if (currentPage < totalPages) { %>
+
+                                <a href="/api/User/showUserData?page=<%= currentPage + 1 %>">
+                                    <button>Next</button>
+                                </a>
+
+                                <% } %>
+
+        </div>
     </div>
 </body>
 <script>

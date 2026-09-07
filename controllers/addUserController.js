@@ -17,13 +17,29 @@ const saveUserData = async (req, res) => {
 
 const displayUsers = async (req, res) => {
     try {
-        const result = await userModel.showUserData();
+
+        const page = parseInt(req.query.page) || 1;
+        console.log("page===>", page);
+
+        const limit = 5;
+
+        const offset = (page - 1) * limit;
+        console.log("offset===>", offset);
+
+        const result = await userModel.showUserData(limit, offset);
+
+        const totalUsers = await userModel.countUsers();
+
+        const totalPages = Math.ceil(totalUsers / limit);
 
         return res.render('ShowUser', {
-            users: result
+            users: result,
+            currentPage: page,
+            totalPages: totalPages
         });
 
     } catch (error) {
+
         console.log(error);
 
         return res.status(500).send("User Data Failed");
