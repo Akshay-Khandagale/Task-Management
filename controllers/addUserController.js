@@ -19,12 +19,10 @@ const displayUsers = async (req, res) => {
     try {
 
         const page = parseInt(req.query.page) || 1;
-        console.log("page===>", page);
 
         const limit = 5;
 
         const offset = (page - 1) * limit;
-        console.log("offset===>", offset);
 
         const result = await userModel.showUserData(limit, offset);
 
